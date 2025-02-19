@@ -1,0 +1,25 @@
+{
+  "name": "mj-m.kro.kr",
+  "version": "1.0.0",
+  "description": "munjung middle school",
+  "main": "index.js",
+  "dependencies": {
+    "node-cron": "^3.0.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swk3087/mj-m.kro.kr.git"
+  },
+  "author": "swk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swk3087/mj-m.kro.kr/issues"
+  },
+  "homepage": "https://github.com/swk3087/mj-m.kro.kr#readme"
+}
