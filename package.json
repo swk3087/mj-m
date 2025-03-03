@@ -1,0 +1,20 @@
+{
+  "name": "mj-m.kro.kr",
+  "version": "1.0.0",
+  "description": "munjung middle school",
+  "dependencies": {
+    "node-cron": "^3.0.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swk3087/mj-m.git"
+  },
+  "author": "swk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swk3087/mj-m/issues"
+  },
+  "homepage": "https://github.com/swk3087/mj-m#readme"
+}

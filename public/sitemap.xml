@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:urlset xmlns:ns0="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9                             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>1.00</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/404.html</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/calendar/</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/calendar/index.html</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/files/</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.6</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/files/favicon.ico</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.5</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/files/files.zip</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.5</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/files/text1.ttf</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.5</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/files/text2.ttf</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.5</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/files/결석-조퇴-결과-신고서.pdf</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.5</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/files/학교장-허가-교외-체험학습-신청서-및-보고서.pdf</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.5</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/index.html</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>1.00</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/robots.txt</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.3</ns0:priority>
+  </ns0:url>
+
+  <ns0:url>
+    <ns0:loc>https://mj-m.kro.kr/scr.js</ns0:loc>
+    <ns0:lastmod>2025-03-01T00:00:00+00:00</ns0:lastmod>
+    <ns0:priority>0.3</ns0:priority>
+  </ns0:url>
+
+</ns0:urlset>
