@@ -1,11 +1,11 @@
         @font-face {
             font-family: 'CustomFont1';
-            src: url('files/text1.ttf') format('truetype');
+            src: url('/files/text1.ttf') format('truetype');
         }
         
         @font-face {
             font-family: 'CustomFont2';
-            src: url('files/text2.ttf') format('truetype');
+            src: url('/files/text2.ttf') format('truetype');
         }
         
         body {
