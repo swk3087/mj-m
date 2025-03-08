@@ -1,10 +1,10 @@
 @font-face {
-	font-family: 'CustomFont1';
-	src: url('/files/text1.ttf') format('truetype');
+	font-family: 'Font_B';
+	src: url('/files/font_B.ttf') format('truetype');
 }
 @font-face {
-	font-family: 'CustomFont2';
-	src: url('/files/text2.ttf') format('truetype');
+	font-family: 'Font_M';
+	src: url('/files/font_M.ttf') format('truetype');
 }
 
 body {
@@ -30,12 +30,12 @@ body {
 h1 {
 	color: #0073e6;
 	margin-bottom: 20px;
-	font-family: 'CustomFont2', Arial, sans-serif;
+	font-family: 'Font_M', Arial, sans-serif;
 }
 
 .btN {
 	display: block;
-	font-family: 'CustomFont1', Arial, sans-serif;
+	font-family: 'Font_B', Arial, sans-serif;
 	width: 100%;
 	max-width: 450px;
 	margin: 10px auto;
