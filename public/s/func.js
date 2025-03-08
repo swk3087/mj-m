@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", function () {
+    let cssLink = document.querySelector('link[href^="s/main.css"]');
+    if (cssLink) {
+        cssLink.href = "s/main.css?v=" + new Date().getTime();
+    }
+});
+
 function mOve(uRl) {        //모달창에서 쓰니까 지우면 안됨
     function isMobile() {
       var userAgent = navigator.userAgent;
