@@ -29,3 +29,13 @@ function dowN(url) {
     a.click();
     document.body.removeChild(a);
 }
+
+const $body = document.querySelector('body');
+function preventScroll(e) {
+  e.preventDefault();
+}
+// 'wheel' 이벤트를 사용하여 스크롤 감지 후 방지
+$body.addEventListener('wheel', preventScroll, { passive: false });
+$body.addEventListener('click', function() { // body 를 다시 클릭하면 스크롤 재개
+  $body.removeEventListener('wheel', preventScroll, { passive: false });
+});
