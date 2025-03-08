@@ -39,3 +39,12 @@ $body.addEventListener('wheel', preventScroll, { passive: false });
 $body.addEventListener('click', function() { // body 를 다시 클릭하면 스크롤 재개
   $body.removeEventListener('wheel', preventScroll, { passive: false });
 });
+
+class linkClass extends HTMLElement {
+  connectedCallback() {
+    let name = this.getAttribute('name')
+    let link = this.getAttribute('link')
+    this.innerHTML = `<button class="btN" onclick="Goo('${link}')">${name}</button>`
+  }
+}
+customElements.define('Golink', linkClass)
