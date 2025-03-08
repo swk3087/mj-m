@@ -1,7 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // CSS 캐시 방지
     let cssLink = document.querySelector('link[href^="s/main.css"]');
     if (cssLink) {
         cssLink.href = "s/main.css?v=" + new Date().getTime();
+    }
+
+    // JS 캐시 방지
+    let jsScript = document.querySelector('script[src^="s/func.js"]');
+    if (jsScript) {
+        let newScript = document.createElement("script");
+        newScript.src = "s/func.js?v=" + new Date().getTime();
+        newScript.defer = true; // 기존 스크립트처럼 비동기 로드
+        document.body.appendChild(newScript);
+
+        // 기존 스크립트 삭제 (중복 실행 방지)
+        jsScript.remove();
     }
 });
 
