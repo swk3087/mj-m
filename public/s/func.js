@@ -55,4 +55,4 @@ class linkClass extends HTMLElement {
     this.innerHTML = `<button class="btN" onclick="Goo('${link}')">${name}</button>`
   }
 }
-customElements.define('golink', linkClass)
+customElements.define('go-link', linkClass)
