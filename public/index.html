@@ -70,7 +70,7 @@
         <!--button class="btN" onclick="mOve('https://mj-m.kro.kr/files/2024학년도1,2학년2학기2차지필평가시험범위가정통신문.pdf')">⭐1,2학년 2학기 2차 지필평가 시험범위 가정통신문⭐</button-->
    
         <button class="btN" onclick="Goo('//neisplus.kr/')">나이스플러스(성적조회) 바로가기</button>
-        <button class="btN" onclick="Goo('calendar/')">학사일정 바로가기</button>
+        <button class="btN btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModAl3" >학사일정 보기</button>
         
         
     </div>   
@@ -118,6 +118,27 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" style="font-family: 'CustomFont1', Arial, sans-serif;" onclick="dowN('//mj-m.kro.kr/files/결석-조퇴-결과-신고서.pdf')" data-bs-dismiss="modal">다운로드</button>
         <button type="button" class="btn btn-primary" style="font-family: 'CustomFont1', Arial, sans-serif;" onclick="mOve('https://mj-m.kro.kr/files/결석-조퇴-결과-신고서.pdf')" data-bs-dismiss="modal">열기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥모달 창관리-3🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥-->
+
+<div class="modal fade" id="ModAl3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="exampleModalLabel" style="font-family: 'CustomFont1', Arial, sans-serif;">2025 학사일정</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>두 방법 중 하나를 선택하세요.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" style="font-family: 'CustomFont1', Arial, sans-serif;" onclick="dowN('//mj-m.kro.kr/files/학사일정.png')" data-bs-dismiss="modal">이미지 다운로드</button>
+        <button type="button" class="btn btn-primary" style="font-family: 'CustomFont1', Arial, sans-serif;" onclick="Goo('calendar/')" data-bs-dismiss="modal">구글 캘린더로 보기</button>
       </div>
     </div>
   </div>
