@@ -1,0 +1,78 @@
+@font-face {
+	font-family: 'Font_B';
+	src: url('/files/font_B.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Font_M';
+	src: url('/files/font_M.ttf') format('truetype');
+}
+
+body {
+	background-color: #f0f0f0;
+	color: #333;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+}
+
+.container {
+	text-align: center;
+	background: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	/* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+	width: 95%;
+	max-width: 800px;
+}
+
+h1 {
+	color: #0073e6;
+	margin-bottom: 20px;
+	font-family: 'Font_M', Arial, sans-serif;
+}
+
+.btN {
+	display: block;
+	font-family: 'Font_B', Arial, sans-serif;
+	width: 100%;
+	max-width: 450px;
+	margin: 10px auto;
+	padding: 10px 20px;
+	font-size: 16px;
+	color: #fff;
+	background-color: #0073e6;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+	transition: background-color 0.3s ease;
+	/* 뻘-짓 */
+}
+.btN:hover {
+	background-color: #005bb5;
+}
+
+@media (max-width: 600px) {
+	h1 {
+		font-size: 24px;
+	}
+}
+@media (min-width: 601px) and (max-width: 1024px) {
+	h1 {
+		font-size: 32px;
+	}
+}
+@media (min-width: 1025px) {
+	h1 {
+		font-size: 40px;
+	}
+}
+
+footer {
+	margin-top: auto;
+	padding: 10px 0;
+	font-size: 12px;
+	color: #999;
+}
