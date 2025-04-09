@@ -6,6 +6,21 @@
       "*.log",
       "/node_modules/**",
       "*.py"
+    ],
+        "headers": [
+      {
+        "source": "/files/**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET"
+          }
+        ]
+      }
     ]
   }
 }
