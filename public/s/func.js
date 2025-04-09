@@ -26,7 +26,8 @@ function mOve(uRl) {        //모달창에서 쓰니까 지우면 안됨
     }
 
     if (isMobile()) {
-        window.location.href=`https://docs.google.com/viewerng/viewer?url=${uRl}`;
+        //window.location.href=`https://docs.google.com/viewerng/viewer?url=${uRl}`;
+        window.location.href=`http://pdfwebviewer.kro.kr/?url=${uRl}`;
     } else {
        	window.location.href=`${uRl}`;
     }
