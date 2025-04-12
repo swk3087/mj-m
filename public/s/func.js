@@ -57,3 +57,13 @@ class linkClass extends HTMLElement {
   }
 }
 customElements.define('go-link', linkClass)
+
+class modalClass extends HTMLElement {
+  connectedCallback() {
+    let modalId = this.getAttribute('mId')
+    let titleText = this.getAttribute('tT')
+    let urlLink = this.getAttribute('url')
+    this.innerHTML = `<div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h2 class="modal-title fs-5" id="exampleModalLabel" style="font-family: 'CustomFont1', Arial, sans-serif;">${titleText}</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><p>두 방법 중 하나를 선택하세요.</p></div><div class="modal-footer"><button type="button" class="btn btn-secondary" style="font-family: 'CustomFont1', Arial, sans-serif;" onclick="dowN('${urlLink}')" data-bs-dismiss="modal">다운로드</button><button type="button" class="btn btn-primary" style="font-family: 'CustomFont1', Arial, sans-serif;" onclick="mOve('${urlLink}')" data-bs-dismiss="modal">열기</button></div></div></div></div>`
+  }
+}
+customElements.define('modal-pre', modalClass)
