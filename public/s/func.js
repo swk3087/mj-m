@@ -10,11 +10,34 @@ document.addEventListener("DOMContentLoaded", function () {
     if (jsScript) {
         let newScript = document.createElement("script");
         newScript.src = "s/func.js?v=" + new Date().getTime();
-        newScript.defer = true; // 기존 스크립트처럼 비동기 로드
+        newScript.defer = true;
         document.body.appendChild(newScript);
-
-        // 기존 스크립트 삭제 (중복 실행 방지)
         jsScript.remove();
+    }
+
+    // 커스텀 태그 등록
+    if (!customElements.get('go-link')) {
+        class linkClass extends HTMLElement {
+            connectedCallback() {
+                let name = this.getAttribute('name')
+                let link = this.getAttribute('link')
+                this.innerHTML = `<button class="btN" onclick="Goo('${link}')">${name}</button>`
+            }
+        }
+        customElements.define('go-link', linkClass)
+    }
+
+    if (!customElements.get('modal-pre')) {
+        class modalClass extends HTMLElement {
+            connectedCallback() {
+                let modalId = this.getAttribute('mid')
+                let titleText = this.getAttribute('tt')
+                let urlLink1 = this.getAttribute('scrt1')
+                let urlLink2 = this.getAttribute('scrt2')
+                this.innerHTML = `<div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h2 class="modal-title fs-5" id="exampleModalLabel" style="font-family: 'CustomFont1', Arial, sans-serif;">${titleText}</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><p>두 방법 중 하나를 선택하세요.</p></div><div class="modal-footer"><button type="button" class="btn btn-secondary" style="font-family: 'CustomFont1', Arial, sans-serif;" onclick="${urlLink1}" data-bs-dismiss="modal">다운로드</button><button type="button" class="btn btn-primary" style="font-family: 'CustomFont1', Arial, sans-serif;" onclick="${urlLink2}" data-bs-dismiss="modal">열기</button></div></div></div></div>`
+            }
+        }
+        customElements.define('modal-pre', modalClass)
     }
 });
 
@@ -68,7 +91,7 @@ class modalClass extends HTMLElement {
   }
 }
 customElements.define('modal-pre', modalClass)
-*/
+
 if (!customElements.get('go-link')) {
   class linkClass extends HTMLElement {
     connectedCallback() {
@@ -92,3 +115,4 @@ if (!customElements.get('modal-pre')) {
   }
   customElements.define('modal-pre', modalClass)
 }
+*/
