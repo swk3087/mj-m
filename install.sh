@@ -1,5 +1,5 @@
 pkg up -y
-pkg install nodejs-lts git gh -y
+pkg install nodejs-lts python git gh -y
 npm config set bin-links false
 npm install -g firebase-tools --force --legacy-peer-deps --no-optional
 git config --global --add safe.directory /storage/emulated/0/dev/.mj-m
