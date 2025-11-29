@@ -18,7 +18,23 @@
           {
             "key": "Access-Control-Allow-Methods",
             "value": "GET"
-          }
+          },
+          {
+        "source": "/block.js",
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "https://playentry.org" },
+          { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
+          { "key": "Access-Control-Allow-Headers", "value": "Content-Type" },
+          { "key": "Content-Type", "value": "application/javascript; charset=UTF-8" },
+          { "key": "Cache-Control", "value": "public, max-age=300" }
+        ]
+      },
+      {
+        "source": "**/*.js",
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "https://playentry.org" }
+        ]
+      }
         ]
       }
     ]
