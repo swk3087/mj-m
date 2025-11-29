@@ -71,7 +71,52 @@
         'stop_project',
         'pause_project',
         'is_site_running',
-        'open_url'
+        'open_url',
+
+        // Newly added utility blocks for dates, math, strings, environment, and storage
+        'current_hour',
+        'current_day',
+        'current_month',
+        'current_year',
+        'current_weekday',
+        'random_float',
+        'random_int_between',
+        'math_round',
+        'math_floor',
+        'math_ceil',
+        'math_sqrt',
+        'string_length',
+        'substring',
+        'string_includes',
+        'string_uppercase',
+        'string_lowercase',
+        'to_number',
+        'to_string',
+        'screen_width',
+        'screen_height',
+        'browser_language',
+        'storage_get_item',
+        'storage_set_item',
+        'random_color'
+        ,
+        // Additional developer utility blocks that provide common programming helpers
+        'min_of_two',
+        'clamp_number',
+        'random_boolean',
+        'current_timestamp',
+        'current_iso_datetime',
+        'object_keys_count',
+        'object_merge',
+        'range_array',
+        'array_slice',
+        'array_concat',
+        'array_sum',
+        'type_of',
+        'generate_uuid',
+        'to_base64',
+        'from_base64',
+        'string_split',
+        'array_join'
     ];
     if (!Entry.staticBlocks) {
         Entry.staticBlocks = [];
@@ -1133,6 +1178,801 @@
         'basic'
     );
 
+    // ---------------------------------------------------------------------
+    // Additional date/time blocks
+    // ---------------------------------------------------------------------
+    // Returns the current hour (00-23) as a string
+    addBlock(
+        'current_hour',
+        '현재 시',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            const d = new Date();
+            // getHours returns the hour (0–23) according to local time【854077714457006†L187-L219】
+            return String(d.getHours()).padStart(2, '0');
+        },
+        'basic_string_field'
+    );
+
+    // Returns the current day of the month (01-31) as a string
+    addBlock(
+        'current_day',
+        '현재 일',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            const d = new Date();
+            // getDate returns the day of the month from 1–31【692120372088196†L187-L210】
+            return String(d.getDate()).padStart(2, '0');
+        },
+        'basic_string_field'
+    );
+
+    // Returns the current month (01-12) as a string.  Date.getMonth() is zero‑based【33407994100977†L187-L213】.
+    addBlock(
+        'current_month',
+        '현재 월',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            const d = new Date();
+            return String(d.getMonth() + 1).padStart(2, '0');
+        },
+        'basic_string_field'
+    );
+
+    // Returns the current year as a four‑digit string【990619095957855†L187-L219】
+    addBlock(
+        'current_year',
+        '현재 연도',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            const d = new Date();
+            return String(d.getFullYear());
+        },
+        'basic_string_field'
+    );
+
+    // Returns the current day of week (0–6 where 0 is Sunday)【371363214208438†L187-L213】
+    addBlock(
+        'current_weekday',
+        '현재 요일 (0=일요일)',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            const d = new Date();
+            return String(d.getDay());
+        },
+        'basic_string_field'
+    );
+
+    // ---------------------------------------------------------------------
+    // Random number and math blocks
+    // ---------------------------------------------------------------------
+    // Returns a random floating‑point number between 0 (inclusive) and 1 (exclusive)【602974568644677†L187-L216】
+    addBlock(
+        'random_float',
+        '무작위 소수',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            return Math.random();
+        },
+        'basic_string_field'
+    );
+
+    // Returns a random integer between two values inclusive
+    addBlock(
+        'random_int_between',
+        '무작위 정수 %1 부터 %2',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['1'] }, { type: 'text', params: ['10'] } ],
+            map: { MIN: 0, MAX: 1 }
+        },
+        'analysis',
+        (sprite, script) => {
+            const min = Number(script.getValue('MIN', script));
+            const max = Number(script.getValue('MAX', script));
+            const lo = Math.ceil(Math.min(min, max));
+            const hi = Math.floor(Math.max(min, max));
+            // inclusive range using Math.random() formula【602974568644677†L187-L216】
+            return Math.floor(Math.random() * (hi - lo + 1)) + lo;
+        },
+        'basic_string_field'
+    );
+
+    // Round a number to the nearest integer using Math.round()【169848620167509†L187-L213】
+    addBlock(
+        'math_round',
+        '반올림 %1',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['3.14'] } ],
+            map: { VALUE: 0 }
+        },
+        'calc',
+        (sprite, script) => {
+            const x = Number(script.getValue('VALUE', script));
+            return Math.round(x);
+        },
+        'basic_string_field'
+    );
+
+    // Floor a number (round down) using Math.floor()【703229753870293†L187-L213】
+    addBlock(
+        'math_floor',
+        '내림 %1',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['3.9'] } ],
+            map: { VALUE: 0 }
+        },
+        'calc',
+        (sprite, script) => {
+            const x = Number(script.getValue('VALUE', script));
+            return Math.floor(x);
+        },
+        'basic_string_field'
+    );
+
+    // Ceil a number (round up) using Math.ceil()【974893183198530†L187-L213】
+    addBlock(
+        'math_ceil',
+        '올림 %1',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['3.1'] } ],
+            map: { VALUE: 0 }
+        },
+        'calc',
+        (sprite, script) => {
+            const x = Number(script.getValue('VALUE', script));
+            return Math.ceil(x);
+        },
+        'basic_string_field'
+    );
+
+    // Compute square root using Math.sqrt()【937862952094458†L187-L211】
+    addBlock(
+        'math_sqrt',
+        '제곱근 %1',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['9'] } ],
+            map: { VALUE: 0 }
+        },
+        'calc',
+        (sprite, script) => {
+            const x = Number(script.getValue('VALUE', script));
+            return Math.sqrt(x);
+        },
+        'basic_string_field'
+    );
+
+    // ---------------------------------------------------------------------
+    // String manipulation blocks
+    // ---------------------------------------------------------------------
+    // Return the length of a string using the length property【173178604627789†L187-L188】
+    addBlock(
+        'string_length',
+        '문자열 %1 길이',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['hello'] } ],
+            map: { STR: 0 }
+        },
+        'text',
+        (sprite, script) => {
+            const str = String(script.getValue('STR', script));
+            return str.length;
+        },
+        'basic_string_field'
+    );
+
+    // Extract a substring from start to end (1‑based indices)
+    addBlock(
+        'substring',
+        '문자열 %1 부분 %2 부터 %3 까지',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['hello world'] }, { type: 'text', params: ['1'] }, { type: 'text', params: ['5'] } ],
+            map: { STR: 0, START: 1, END: 2 }
+        },
+        'text',
+        (sprite, script) => {
+            const str = String(script.getValue('STR', script));
+            let start = Number(script.getValue('START', script)) - 1;
+            let end = Number(script.getValue('END', script));
+            if (isNaN(start) || start < 0) start = 0;
+            if (isNaN(end) || end <= 0) end = str.length;
+            // substring returns the part of the string from start up to but excluding end【476442332346209†L187-L217】
+            return str.substring(start, end);
+        },
+        'basic_string_field'
+    );
+
+    // Check if a string contains another string using String.includes()【996137871167531†L187-L189】
+    addBlock(
+        'string_includes',
+        '문자열 %1 에 %2 포함?',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['hello world'] }, { type: 'text', params: ['world'] } ],
+            map: { STR: 0, SEARCH: 1 }
+        },
+        'text',
+        (sprite, script) => {
+            const str = String(script.getValue('STR', script));
+            const search = String(script.getValue('SEARCH', script));
+            return str.includes(search);
+        },
+        'basic_boolean_field'
+    );
+
+    // Convert string to uppercase【433324581644623†L187-L210】
+    addBlock(
+        'string_uppercase',
+        '문자열 %1 대문자 변환',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['hello'] } ],
+            map: { STR: 0 }
+        },
+        'text',
+        (sprite, script) => {
+            const str = String(script.getValue('STR', script));
+            return str.toUpperCase();
+        },
+        'basic_string_field'
+    );
+
+    // Convert string to lowercase【224288948721045†L187-L215】
+    addBlock(
+        'string_lowercase',
+        '문자열 %1 소문자 변환',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['HELLO'] } ],
+            map: { STR: 0 }
+        },
+        'text',
+        (sprite, script) => {
+            const str = String(script.getValue('STR', script));
+            return str.toLowerCase();
+        },
+        'basic_string_field'
+    );
+
+    // Convert a value to a number using Number()【275533574888864†L186-L217】
+    addBlock(
+        'to_number',
+        '값 %1 숫자로',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['"42"'] } ],
+            map: { VALUE: 0 }
+        },
+        'calc',
+        (sprite, script) => {
+            const value = script.getValue('VALUE', script);
+            return Number(value);
+        },
+        'basic_string_field'
+    );
+
+    // Convert a value to a string
+    addBlock(
+        'to_string',
+        '값 %1 문자열로',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['123'] } ],
+            map: { VALUE: 0 }
+        },
+        'calc',
+        (sprite, script) => {
+            const value = script.getValue('VALUE', script);
+            return String(value);
+        },
+        'basic_string_field'
+    );
+
+    // ---------------------------------------------------------------------
+    // Environment information blocks
+    // ---------------------------------------------------------------------
+    // Return the screen width in CSS pixels【266471493358716†L185-L186】
+    addBlock(
+        'screen_width',
+        '화면 너비',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            return window.screen.width;
+        },
+        'basic_string_field'
+    );
+
+    // Return the screen height in CSS pixels (similar to Screen.height)
+    addBlock(
+        'screen_height',
+        '화면 높이',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            return window.screen.height;
+        },
+        'basic_string_field'
+    );
+
+    // Return the browser's preferred language【988774608137001†L185-L187】
+    addBlock(
+        'browser_language',
+        '브라우저 언어',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            return navigator.language;
+        },
+        'basic_string_field'
+    );
+
+    // ---------------------------------------------------------------------
+    // Web Storage blocks
+    // ---------------------------------------------------------------------
+    // Retrieve a value from localStorage【371751712948230†L185-L207】
+    addBlock(
+        'storage_get_item',
+        '스토리지에서 %1 값',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['key'] } ],
+            map: { KEY: 0 }
+        },
+        'text',
+        (sprite, script) => {
+            const key = String(script.getValue('KEY', script));
+            return localStorage.getItem(key) || '';
+        },
+        'basic_string_field'
+    );
+
+    // Set a value in localStorage【803941998277166†L185-L187】
+    addBlock(
+        'storage_set_item',
+        '스토리지 %1 에 값 %2 저장',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['key'] }, { type: 'text', params: ['value'] } ],
+            map: { KEY: 0, VALUE: 1 }
+        },
+        'command',
+        (sprite, script) => {
+            const key = String(script.getValue('KEY', script));
+            const value = script.getValue('VALUE', script);
+            localStorage.setItem(key, value);
+        },
+        'basic'
+    );
+
+    // ---------------------------------------------------------------------
+    // Colour utility block
+    // ---------------------------------------------------------------------
+    // Generate a random hex colour string (e.g. #A1B2C3)
+    addBlock(
+        'random_color',
+        '무작위 색상',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            const n = Math.floor(Math.random() * 0x1000000);
+            const hex = n.toString(16).padStart(6, '0');
+            return '#' + hex;
+        },
+        'basic_string_field'
+    );
+
+    // ---------------------------------------------------------------------
+    // Additional helper blocks
+    // These blocks implement miscellaneous utilities that are often useful
+    // when writing more complex programs.  Each block is annotated with
+    // citations from MDN documentation describing the underlying
+    // JavaScript APIs.  Use them to simplify common tasks.
+
+    // Return the smaller of two numbers using Math.min()【745298443217660†L354-L360】
+    addBlock(
+        'min_of_two',
+        '두 수 중 작은 값 %1 %2',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['3'] }, { type: 'text', params: ['5'] } ],
+            map: { A: 0, B: 1 }
+        },
+        'calc',
+        (sprite, script) => {
+            const a = Number(script.getValue('A', script));
+            const b = Number(script.getValue('B', script));
+            return Math.min(a, b);
+        },
+        'basic_string_field'
+    );
+
+    // Clamp a number between a minimum and maximum
+    // Uses Math.min/Math.max to bound the value【745298443217660†L354-L360】
+    addBlock(
+        'clamp_number',
+        '값 %1 을 %2 이상 %3 이하로 제한',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['50'] }, { type: 'text', params: ['0'] }, { type: 'text', params: ['100'] } ],
+            map: { VALUE: 0, MIN: 1, MAX: 2 }
+        },
+        'calc',
+        (sprite, script) => {
+            const v = Number(script.getValue('VALUE', script));
+            const min = Number(script.getValue('MIN', script));
+            const max = Number(script.getValue('MAX', script));
+            return Math.min(Math.max(v, min), max);
+        },
+        'basic_string_field'
+    );
+
+    // Generate a random boolean using Math.random()【745298443217660†L366-L368】
+    addBlock(
+        'random_boolean',
+        '무작위 참/거짓',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            return Math.random() >= 0.5;
+        },
+        'basic_boolean_field'
+    );
+
+    // Current timestamp in milliseconds since the epoch【70123868884268†L208-L211】
+    addBlock(
+        'current_timestamp',
+        '현재 타임스탬프',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            return Date.now();
+        },
+        'basic_string_field'
+    );
+
+    // Current ISO 8601 formatted datetime string【386903377069027†L187-L191】
+    addBlock(
+        'current_iso_datetime',
+        '현재 ISO 날짜시간',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            return new Date().toISOString();
+        },
+        'basic_string_field'
+    );
+
+    // Count the number of own enumerable keys on an object【732278019155262†L187-L220】
+    addBlock(
+        'object_keys_count',
+        '객체 %1 키 개수',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['{ a: 1, b: 2 }'] } ],
+            map: { OBJ_EXPR: 0 }
+        },
+        'analysis',
+        (sprite, script) => {
+            try {
+                const obj = eval(`(${script.getValue('OBJ_EXPR', script)})`);
+                return Object.keys(obj).length;
+            } catch (e) {
+                return 0;
+            }
+        },
+        'basic_string_field'
+    );
+
+    // Merge two objects using Object.assign()【436255912355150†L187-L189】
+    addBlock(
+        'object_merge',
+        '객체 %1 와 %2 합치기',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['{ x: 1 }'] }, { type: 'text', params: ['{ y: 2 }'] } ],
+            map: { OBJ1: 0, OBJ2: 1 }
+        },
+        'text',
+        (sprite, script) => {
+            try {
+                const obj1 = eval(`(${script.getValue('OBJ1', script)})`);
+                const obj2 = eval(`(${script.getValue('OBJ2', script)})`);
+                const merged = Object.assign({}, obj1, obj2);
+                return JSON.stringify(merged);
+            } catch (e) {
+                return `오류: ${e.message}`;
+            }
+        },
+        'basic_string_field'
+    );
+
+    // Generate an array of numbers from start to end with a given step
+    // Uses Array.from() to produce a shallow-copied array【929943193353724†L187-L189】
+    addBlock(
+        'range_array',
+        '범위 배열 %1 부터 %2 까지 간격 %3',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['1'] }, { type: 'text', params: ['5'] }, { type: 'text', params: ['1'] } ],
+            map: { START: 0, END: 1, STEP: 2 }
+        },
+        'analysis',
+        (sprite, script) => {
+            const start = Number(script.getValue('START', script));
+            const end = Number(script.getValue('END', script));
+            let step = Number(script.getValue('STEP', script));
+            if (!step) step = 1;
+            const arr = [];
+            if (step > 0) {
+                for (let i = start; i <= end; i += step) arr.push(i);
+            } else if (step < 0) {
+                for (let i = start; i >= end; i += step) arr.push(i);
+            }
+            return JSON.stringify(arr);
+        },
+        'basic_string_field'
+    );
+
+    // Slice a portion of an array【871398334227420†L187-L190】
+    addBlock(
+        'array_slice',
+        '배열 %1 부분 %2 부터 %3 까지',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['[1,2,3,4,5]'] }, { type: 'text', params: ['2'] }, { type: 'text', params: ['4'] } ],
+            map: { ARRAY_EXPR: 0, START: 1, END: 2 }
+        },
+        'analysis',
+        (sprite, script) => {
+            try {
+                const arr = eval(`(${script.getValue('ARRAY_EXPR', script)})`);
+                const start = Number(script.getValue('START', script)) - 1;
+                let end = Number(script.getValue('END', script));
+                if (isNaN(end)) {
+                    end = undefined;
+                }
+                // slice uses end index (not inclusive) and zero-based start
+                const sliced = arr.slice(start, end ? end : undefined);
+                return JSON.stringify(sliced);
+            } catch (e) {
+                return `오류: ${e.message}`;
+            }
+        },
+        'basic_string_field'
+    );
+
+    // Concatenate two arrays【586262527602940†L187-L189】
+    addBlock(
+        'array_concat',
+        '배열 %1 과 %2 합치기',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['[1,2]'] }, { type: 'text', params: ['[3,4]'] } ],
+            map: { ARR1: 0, ARR2: 1 }
+        },
+        'analysis',
+        (sprite, script) => {
+            try {
+                const arr1 = eval(`(${script.getValue('ARR1', script)})`);
+                const arr2 = eval(`(${script.getValue('ARR2', script)})`);
+                const result = arr1.concat(arr2);
+                return JSON.stringify(result);
+            } catch (e) {
+                return `오류: ${e.message}`;
+            }
+        },
+        'basic_string_field'
+    );
+
+    // Sum all numeric elements in an array using reduce()【563092013807589†L187-L190】
+    addBlock(
+        'array_sum',
+        '배열 %1 합계',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['[1,2,3]'] } ],
+            map: { ARRAY_EXPR: 0 }
+        },
+        'calc',
+        (sprite, script) => {
+            try {
+                const arr = eval(`(${script.getValue('ARRAY_EXPR', script)})`);
+                const sum = arr.reduce((acc, val) => acc + Number(val), 0);
+                return sum;
+            } catch (e) {
+                return 0;
+            }
+        },
+        'basic_string_field'
+    );
+
+    // Return the type of a value using typeof【721228052876061†L186-L187】
+    addBlock(
+        'type_of',
+        '%1 의 타입',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['123'] } ],
+            map: { VALUE: 0 }
+        },
+        'analysis',
+        (sprite, script) => {
+            try {
+                const value = eval(script.getValue('VALUE', script));
+                return typeof value;
+            } catch (e) {
+                return 'undefined';
+            }
+        },
+        'basic_string_field'
+    );
+
+    // Generate a cryptographically secure UUID【88879990316380†L190-L209】
+    addBlock(
+        'generate_uuid',
+        '무작위 UUID 생성',
+        blockColors,
+        { params: [], def: [], map: {} },
+        'analysis',
+        () => {
+            if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+                return window.crypto.randomUUID();
+            }
+            // Fallback UUID v4 generator
+            const s = [];
+            const hex = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+            for (let i = 0; i < hex.length; i++) {
+                const c = hex[i];
+                if (c === 'x' || c === 'y') {
+                    const r = Math.random() * 16 | 0;
+                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    s.push(v.toString(16));
+                } else {
+                    s.push(c);
+                }
+            }
+            return s.join('');
+        },
+        'basic_string_field'
+    );
+
+    // Encode a string to Base64 using btoa()【198049400293323†L187-L194】
+    addBlock(
+        'to_base64',
+        '문자열 %1 Base64 인코딩',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['hello'] } ],
+            map: { STR: 0 }
+        },
+        'text',
+        (sprite, script) => {
+            const str = String(script.getValue('STR', script));
+            try {
+                // Encode to UTF-8 then base64
+                return btoa(unescape(encodeURIComponent(str)));
+            } catch (e) {
+                return '';
+            }
+        },
+        'basic_string_field'
+    );
+
+    // Decode a Base64 string using atob()【496004071715597†L185-L188】
+    addBlock(
+        'from_base64',
+        'Base64 문자열 %1 디코딩',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['aGVsbG8='] } ],
+            map: { B64: 0 }
+        },
+        'text',
+        (sprite, script) => {
+            const b64 = String(script.getValue('B64', script));
+            try {
+                const decoded = atob(b64);
+                return decodeURIComponent(escape(decoded));
+            } catch (e) {
+                return '';
+            }
+        },
+        'basic_string_field'
+    );
+
+    // Split a string into an array based on a delimiter
+    addBlock(
+        'string_split',
+        '문자열 %1 을 %2 로 나누기',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['a,b,c'] }, { type: 'text', params: [','] } ],
+            map: { STR: 0, DELIM: 1 }
+        },
+        'text',
+        (sprite, script) => {
+            const str = String(script.getValue('STR', script));
+            const delim = String(script.getValue('DELIM', script));
+            return JSON.stringify(str.split(delim));
+        },
+        'basic_string_field'
+    );
+
+    // Join an array into a string with a separator
+    addBlock(
+        'array_join',
+        '배열 %1 요소를 %2 로 연결',
+        blockColors,
+        {
+            params: [ { type: 'Block', accept: 'string' }, { type: 'Block', accept: 'string' } ],
+            def: [ { type: 'text', params: ['["a","b","c"]'] }, { type: 'text', params: [','] } ],
+            map: { ARRAY_EXPR: 0, SEP: 1 }
+        },
+        'text',
+        (sprite, script) => {
+            try {
+                const arr = eval(`(${script.getValue('ARRAY_EXPR', script)})`);
+                const sep = String(script.getValue('SEP', script));
+                return arr.join(sep);
+            } catch (e) {
+                return '';
+            }
+        },
+        'basic_string_field'
+    );
+
     // Implementations for variable and list operations
     // These functions are defined separately because they reference
     // Entry.variableContainer which may not exist at definition time.
@@ -1216,9 +2056,28 @@
     // friendly display name in Korean (개발자) and reuse a generic icon
     // from Entry’s hardware palette to differentiate the tab.  If you
     // wish to customise the icon, replace the URL below with your own.
-    updateCategory(DEV_CATEGORY, {
-        name: '개발자',
-        background: '/lib/entry-js/images/hardware.svg',
-        backgroundSize: 32
-    });
+    //
+    // NOTE: When this script is executed before Entry’s playground is
+    // fully initialised, calling `updateCategory` immediately can
+    // cause an error because `Entry.playground` or its `mainWorkspace`
+    // property may not yet exist.  To address this, wrap the call in
+    // a polling helper that waits until the necessary objects are
+    // available.  This mirrors the load‑timing logic in the
+    // Specialblock example and prevents the block palette from
+    // disappearing if the script runs too early.
+    const tryUpdateDevCategory = () => {
+        if (typeof Entry !== 'undefined' &&
+            Entry.playground &&
+            Entry.playground.mainWorkspace &&
+            Entry.playground.blockMenu) {
+            updateCategory(DEV_CATEGORY, {
+                name: '개발자',
+                background: '/lib/entry-js/images/hardware.svg',
+                backgroundSize: 32
+            });
+        } else {
+            setTimeout(tryUpdateDevCategory, 100);
+        }
+    };
+    tryUpdateDevCategory();
 })();
