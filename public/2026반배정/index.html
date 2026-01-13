@@ -1,0 +1,91 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>문정중11 2026 반배정</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 16px;
+      text-align: center;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    button {
+      padding: 10px 0;
+      font-size: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      font-size: 14px;
+    }
+    th {
+      background: #f5f5f5;
+    }
+    .footer {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="buttons">
+      <button onclick="loadClass(1)">1반</button>
+      <button onclick="loadClass(2)">2반</button>
+      <button onclick="loadClass(3)">3반</button>
+      <button onclick="loadClass(4)">4반</button>
+      <button onclick="loadClass(5)">5반</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>작년학번</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <div class="footer">@s.w_kyeom</div>
+  </div>
+
+  <script>
+    let data;
+    fetch("data.json")
+      .then(r => r.json())
+      .then(j => data = j);
+
+    function loadClass(n) {
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = "";
+      if (!data || !data[n]) return;
+      data[n].forEach(s => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${s.name}</td><td>${s.id}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+  </script>
+</body>
+</html>
