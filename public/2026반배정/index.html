@@ -1,67 +1,38 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>문정중11 2026 반배정</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      display: flex;
-      justify-content: center;
-    }
-    .container {
-      width: 100%;
-      max-width: 600px;
-      padding: 16px;
-      text-align: center;
-    }
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-    button {
-      padding: 10px 0;
-      font-size: 14px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      font-size: 14px;
-    }
-    th {
-      background: #f5f5f5;
-    }
-    .footer {
-      margin-top: 12px;
-      font-size: 12px;
-      color: #bbb;
-    }
+    body { margin:0; font-family:system-ui,sans-serif; display:flex; justify-content:center; }
+    .container { width:100%; max-width:600px; padding:16px; text-align:center; }
+    .buttons { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-bottom:12px; }
+    button { padding:10px 0; font-size:14px; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { border:1px solid #ccc; padding:8px; font-size:14px; }
+    th { background:#f5f5f5; }
+    .footer { margin-top:12px; font-size:12px; color:#bbb; }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <button onclick="searchName()" style="margin-bottom:14px; width:100%;">이름으로 학번찾기</button>
+
     <div class="buttons">
-      <button onclick="loadClass(1)">1반</button>
-      <button onclick="loadClass(2)">2반</button>
-      <button onclick="loadClass(3)">3반</button>
-      <button onclick="loadClass(4)">4반</button>
-      <button onclick="loadClass(5)">5반</button>
+      <button onclick="loadClass('1')">1반</button>
+      <button onclick="loadClass('2')">2반</button>
+      <button onclick="loadClass('3')">3반</button>
+      <button onclick="loadClass('4')">4반</button>
+      <button onclick="loadClass('5')">5반</button>
     </div>
 
     <table>
       <thead>
         <tr>
+          <th>2026년 학번</th>
           <th>이름</th>
-          <th>작년학번</th>
+          <th>작년 학번</th>
         </tr>
       </thead>
       <tbody id="tableBody"></tbody>
@@ -71,21 +42,60 @@
   </div>
 
   <script>
-    let data;
+    let dataset = {};
+
     fetch("data.json")
       .then(r => r.json())
-      .then(j => data = j);
+      .then(j => dataset = j);
 
-    function loadClass(n) {
+    function loadClass(cls) {
       const tbody = document.getElementById("tableBody");
       tbody.innerHTML = "";
-      if (!data || !data[n]) return;
-      data[n].forEach(s => {
+      if (!dataset[cls]) return;
+
+      dataset[cls].forEach(s => {
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${s.name}</td><td>${s.id}</td>`;
+        tr.innerHTML = `
+          <td>${s.newId}</td>
+          <td>${s.name}</td>
+          <td>${s.oldId}</td>
+        `;
         tbody.appendChild(tr);
       });
     }
+
+    function searchName() {
+      const name = prompt("이름을 입력하세요:");
+
+      if (!name || name.trim() === "") return;
+
+      const match = [];
+      for (const cls in dataset) {
+        dataset[cls].forEach(s => {
+          if (s.name === name.trim()) {
+            match.push(s);
+          }
+        });
+      }
+
+      if (match.length === 0) {
+        alert(`${name}님은 존재하지 않습니다.`);
+        return;
+      }
+
+      if (match.length > 1) {
+        alert("동명이인입니다.");
+      } //이거 이상함 학인해야함 작동 되는지 모름
+
+      let msg = "";
+      match.forEach(s => {
+        msg += `${s.name} 님의 학번은 ${s.newId}입니다.\n`;
+      });
+
+      alert(msg.trim());
+    }
   </script>
+
 </body>
 </html>
+
